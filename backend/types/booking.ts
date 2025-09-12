@@ -39,6 +39,7 @@ export interface Booking {
   id: number;
   request_id: number;
   provider_id: number;
+  reference_id: string;
   accepted_at: Date;
   scheduled_date?: Date;
   scheduled_time?: string;

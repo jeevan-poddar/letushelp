@@ -45,7 +45,7 @@ export default function About() {
                     Our Story
                   </h2>
                   <p className="text-[var(--text-color)] mb-6 leading-relaxed">
-                    Founded in 2024, Let Us Help was born from a simple
+                    Founded in 2025, Let Us Help was born from a simple
                     observation: finding reliable, skilled professionals for
                     everyday tasks shouldn't be a struggle. Whether you need a
                     plumber to fix a leak, an electrician to install a ceiling
@@ -385,7 +385,7 @@ export default function About() {
               </div>
             </div>
             <div className="mt-12 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
-              <p>©️ 2024 Let Us Help. All rights reserved.</p>
+              <p>©️ 2025 Let Us Help. All rights reserved.</p>
             </div>
           </div>
         </footer>

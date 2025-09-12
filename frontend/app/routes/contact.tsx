@@ -562,7 +562,7 @@ export default function Contact() {
               </div>
             </div>
             <div className="mt-12 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
-              <p>©️ 2024 Let Us Help. All rights reserved.</p>
+              <p>©️ 2025 Let Us Help. All rights reserved.</p>
             </div>
           </div>
         </footer>

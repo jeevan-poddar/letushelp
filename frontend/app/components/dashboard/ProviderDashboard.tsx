@@ -351,6 +351,11 @@ export const ProviderDashboard: React.FC = () => {
                           {booking.status}
                         </span>
                       </span>
+                      {booking.reference_id && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-gray-100 text-gray-700">
+                          {booking.reference_id}
+                        </span>
+                      )}
                     </div>
 
                     <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">

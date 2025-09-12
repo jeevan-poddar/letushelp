@@ -18,16 +18,25 @@ export class BookingModel {
       // Create booking
       const bookingQuery = `
         INSERT INTO bookings (
-          request_id, provider_id, scheduled_date, scheduled_time,
+          request_id, provider_id, reference_id, scheduled_date, scheduled_time,
           estimated_duration, final_price, notes
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *
       `;
+
+      // Generate reference id like BKG-YYYYMMDD-<8 hex>
+      const date = new Date();
+      const yyyy = String(date.getFullYear());
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      const rand = Math.random().toString(16).slice(2, 10).toUpperCase();
+      const referenceId = `BKG-${yyyy}${mm}${dd}-${rand}`;
 
       const bookingValues = [
         data.request_id,
         providerId,
+        referenceId,
         data.scheduled_date || null,
         data.scheduled_time || null,
         data.estimated_duration || null,

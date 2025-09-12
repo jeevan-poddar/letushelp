@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     id SERIAL PRIMARY KEY,
     request_id INTEGER NOT NULL REFERENCES service_requests(id) ON DELETE CASCADE,
     provider_id INTEGER NOT NULL REFERENCES provider_profiles(id) ON DELETE CASCADE,
+    reference_id VARCHAR(32) UNIQUE,
     accepted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     scheduled_date DATE,
     scheduled_time TIME,
@@ -132,3 +133,11 @@ CREATE TRIGGER update_bookings_updated_at
     BEFORE UPDATE ON bookings 
     FOR EACH ROW 
     EXECUTE FUNCTION update_updated_at_column();
+
+-- Ensure reference_id exists and is populated for existing rows
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS reference_id VARCHAR(32);
+-- Create the unique index only after the column exists
+CREATE UNIQUE INDEX IF NOT EXISTS idx_bookings_reference_id ON bookings(reference_id);
+UPDATE bookings 
+SET reference_id = COALESCE(reference_id, 'BKG-' || lpad(id::text, 8, '0'))
+WHERE reference_id IS NULL;

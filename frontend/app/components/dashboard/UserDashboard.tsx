@@ -232,6 +232,11 @@ export const UserDashboard: React.FC = () => {
                           {booking.status}
                         </span>
                       </span>
+                      {booking.reference_id && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-gray-100 text-gray-700">
+                          {booking.reference_id}
+                        </span>
+                      )}
                     </div>
 
                     {booking.provider && (
