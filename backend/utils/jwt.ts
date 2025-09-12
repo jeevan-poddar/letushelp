@@ -3,6 +3,7 @@ import type { JWTPayload } from "../types/auth.js";
 import { authConfig } from "../config/auth.js";
 
 export const generateToken = (payload: JWTPayload): string => {
+  // @ts-ignore
   return jwt.sign(payload, authConfig.jwtSecret, {
     expiresIn: authConfig.jwtExpiresIn,
   });
