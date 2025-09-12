@@ -44,7 +44,7 @@ export class ProviderProfileModel {
 
       await client.query("COMMIT");
 
-      return this.getByUserId(userId);
+      return this.getByUserId(userId) as unknown as ProviderProfile;
     } catch (error) {
       await client.query("ROLLBACK");
       throw error;
@@ -153,7 +153,7 @@ export class ProviderProfileModel {
 
       await client.query("COMMIT");
 
-      return this.getByUserId(userId);
+      return this.getByUserId(userId) as unknown as ProviderProfile;
     } catch (error) {
       await client.query("ROLLBACK");
       throw error;
@@ -170,6 +170,6 @@ export class ProviderProfileModel {
     `;
 
     await pool.query(query, [userId]);
-    return this.getByUserId(userId);
+    return this.getByUserId(userId) as unknown as ProviderProfile;
   }
 }

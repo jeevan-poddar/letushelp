@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { JWTPayload } from "../types/auth.js";
+import type { JWTPayload } from "../types/auth.js";
 import { authConfig } from "../config/auth.js";
 
 export const generateToken = (payload: JWTPayload): string => {

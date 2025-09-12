@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { ServiceModel } from "../models/Service.js";
 
 export const getServices = async (req: Request, res: Response) => {

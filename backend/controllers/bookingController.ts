@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { BookingModel } from "../models/Booking.js";
 import { ProviderProfileModel } from "../models/ProviderProfile.js";
 import { ServiceRequestModel } from "../models/ServiceRequest.js";
@@ -103,7 +103,7 @@ export const updateBookingStatus = async (req: Request, res: Response) => {
       return res.status(403).json({ error: "Provider access required" });
     }
 
-    const bookingId = parseInt(req.params.id);
+    const bookingId = parseInt(req.params.id!);
     const { status } = req.body;
 
     if (isNaN(bookingId)) {
@@ -149,7 +149,7 @@ export const updateBooking = async (req: Request, res: Response) => {
       return res.status(403).json({ error: "Provider access required" });
     }
 
-    const bookingId = parseInt(req.params.id);
+    const bookingId = parseInt(req.params.id!);
     const data: Partial<CreateBookingInput> = req.body;
 
     if (isNaN(bookingId)) {

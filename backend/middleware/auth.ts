@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { JWTPayload } from "../types/auth.js";
+import type { JWTPayload } from "../types/auth.js";
 import { authConfig } from "../config/auth.js";
 
 // Extend Request interface to include user
