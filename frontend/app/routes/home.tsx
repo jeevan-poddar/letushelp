@@ -210,10 +210,8 @@ export default function Home() {
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkn4mtXMie1TYbara5nfaBqutDOV3-LSoE3sNeNN2uRirAQ5_rTgaCAKf-nox61BgyGqXk21whK8nsDiuLi0bSHr6zSf35QaOv0Jyo52bZKg-7yFz-A2Hwt5aYwrdB85spgO4Wap8ykYDGlmrox_pQW1TuAzd6NMotKiqaENrrdOfPorIA-hM-tfzMAK5NrWiIUaev22br_4NnyGDQyWuzECkwhWEgkDY-Ycumnaejk4mPwSe4CkYroyUcBLDwFsGrpsGq5fa_zeQ"
                     />
                     <div>
-                      <h4 className="font-bold text-lg">Jeevan dalla</h4>
-                      <p className="text-sm text-gray-500">
-                        Master Electrician
-                      </p>
+                      <h4 className="font-bold text-lg">Jeevan</h4>
+
                       <div className="flex text-[var(--primary-color)] mt-1">
                         <span className="material-symbols-outlined text-base">
                           star
@@ -247,8 +245,8 @@ export default function Home() {
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0Kqk5JCbAQaMrOa-JNaHD4mpCHUTaI3I-4OBpcmZ23A2lGTIM7Wldwp46HcUzPQk_nXKk_Jk5JF3NmqdJoZ8oDy8M8xTrc5DP2VJ0YA29lppYvmCRXAXgsa4LcSC-cqlTyzEDx1wz5Loq85LuYcwoYIl2W2y7p540xf4iN_VvmqsYl13EiMiWaVlhJ5DlJ5GVGlmFHDK-GGNRatBzxmvJGZqZKsH62KFIR5CH_9U8J6rMtTCJc286OJTkrdkel3NFspXSIZtsPZk"
                     />
                     <div>
-                      <h4 className="font-bold text-lg">Himanshu bklund</h4>
-                      <p className="text-sm text-gray-500">Lead Plumber</p>
+                      <h4 className="font-bold text-lg">Himanshu</h4>
+
                       <div className="flex text-[var(--primary-color)] mt-1">
                         <span className="material-symbols-outlined text-base">
                           star
@@ -282,10 +280,8 @@ export default function Home() {
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWLWairYrH3XuUlczcJscq5wKCEuDz-4-daXUEWKIm0AOg5eNryF3Uf74-TCEGsan8CTdGo3tq5GFkwjBtyuMQ8TwKYIdA92HHMOKvdTdVxAeIXUYt07vbkj3HUYF607-8-1V2QYWySXObKkOhPKr-wVrjXBAkqpgHojzXbUcB0hKstBMVj8ljOauWzNNNW0FOwR8Uco_ZwFXX00Lhuboe6gqiwwr88LnD40fSnoePvRZJdR3jpMdP-RgWPZYfowbSVaW9xDy7blg"
                     />
                     <div>
-                      <h4 className="font-bold text-lg">
-                        Manya Alam (arman ki teesree patni)
-                      </h4>
-                      <p className="text-sm text-gray-500">Gardening Pro</p>
+                      <h4 className="font-bold text-lg">Bipin Pandey</h4>
+
                       <div className="flex text-[var(--primary-color)] mt-1">
                         <span className="material-symbols-outlined text-base">
                           star
