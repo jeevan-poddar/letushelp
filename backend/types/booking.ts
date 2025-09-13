@@ -47,6 +47,9 @@ export interface Booking {
   final_price?: number;
   status: "confirmed" | "in_progress" | "completed" | "cancelled";
   notes?: string;
+  rating?: number;
+  review?: string;
+  rated_at?: Date;
   created_at: Date;
   updated_at: Date;
 }

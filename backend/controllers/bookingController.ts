@@ -3,6 +3,7 @@ import { BookingModel } from "../models/Booking.js";
 import { ProviderProfileModel } from "../models/ProviderProfile.js";
 import { ServiceRequestModel } from "../models/ServiceRequest.js";
 import type { CreateBookingInput } from "../types/booking.js";
+import pool from "../config/database.js";
 
 export const createBooking = async (req: Request, res: Response) => {
   try {
@@ -171,6 +172,62 @@ export const updateBooking = async (req: Request, res: Response) => {
     res.json({ booking });
   } catch (error: any) {
     console.error("Update booking error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const rateBooking = async (req: Request, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+
+    if (req.user.role !== "user") {
+      return res.status(403).json({ error: "User access required" });
+    }
+
+    const bookingId = parseInt(req.params.id!);
+    const { rating, review } = req.body as { rating: number; review?: string };
+
+    if (isNaN(bookingId)) {
+      return res.status(400).json({ error: "Invalid booking ID" });
+    }
+
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ error: "Rating must be between 1 and 5" });
+    }
+
+    // Ensure the booking belongs to the user via the request ownership and is completed
+    const validationQuery = `
+      SELECT b.id, b.status, sr.user_id
+      FROM bookings b
+      JOIN service_requests sr ON b.request_id = sr.id
+      WHERE b.id = $1
+    `;
+
+    const validation = await pool.query(validationQuery, [bookingId]);
+    const row = validation.rows[0];
+
+    if (!row) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    if (row.user_id !== req.user.userId) {
+      return res
+        .status(403)
+        .json({ error: "Not allowed to rate this booking" });
+    }
+
+    if (row.status !== "completed") {
+      return res
+        .status(400)
+        .json({ error: "You can only rate completed bookings" });
+    }
+
+    const booking = await BookingModel.rate(bookingId, rating, review);
+    res.json({ booking });
+  } catch (error: any) {
+    console.error("Rate booking error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

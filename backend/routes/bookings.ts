@@ -6,6 +6,7 @@ import {
   getUserBookings,
   updateBookingStatus,
   updateBooking,
+  rateBooking,
 } from "../controllers/bookingController.js";
 
 const router = Router();
@@ -18,5 +19,6 @@ router.get("/", getUserBookings);
 router.get("/provider", getProviderBookings);
 router.patch("/:id/status", updateBookingStatus);
 router.put("/:id", updateBooking);
+router.post("/:id/rate", rateBooking);
 
 export default router;

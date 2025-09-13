@@ -219,4 +219,20 @@ export class BookingModel {
     const result = await pool.query(query, [id, providerId, ...updateValues]);
     return result.rows[0];
   }
+
+  static async rate(
+    id: number,
+    rating: number,
+    review?: string
+  ): Promise<Booking> {
+    const query = `
+      UPDATE bookings
+      SET rating = $1, review = $2, rated_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP
+      WHERE id = $3
+      RETURNING *
+    `;
+
+    const result = await pool.query(query, [rating, review || null, id]);
+    return result.rows[0];
+  }
 }

@@ -20,6 +20,14 @@ export const UserDashboard: React.FC = () => {
   const [bookings, setBookings] = useState<BookingWithDetails[]>([]);
   const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [ratingState, setRatingState] = useState<{
+    [bookingId: number]: {
+      rating: number;
+      review: string;
+      submitting: boolean;
+      error?: string;
+    };
+  }>({});
 
   useEffect(() => {
     loadData();
@@ -78,6 +86,35 @@ export const UserDashboard: React.FC = () => {
         return <XCircle className="h-4 w-4" />;
       default:
         return <Clock className="h-4 w-4" />;
+    }
+  };
+
+  const handleSubmitRating = async (
+    bookingId: number,
+    rating: number,
+    review: string
+  ) => {
+    try {
+      setRatingState((s) => ({
+        ...s,
+        [bookingId]: { rating, review, submitting: true, error: undefined },
+      }));
+      await bookingAPI.rate(bookingId, { rating, review: review || undefined });
+      await loadData();
+      setRatingState((s) => ({
+        ...s,
+        [bookingId]: { rating, review, submitting: false },
+      }));
+    } catch (error: any) {
+      setRatingState((s) => ({
+        ...s,
+        [bookingId]: {
+          rating,
+          review,
+          submitting: false,
+          error: error?.response?.data?.error || "Failed to submit rating",
+        },
+      }));
     }
   };
 
@@ -257,6 +294,93 @@ export const UserDashboard: React.FC = () => {
                         </span>
                       )}
                     </div>
+
+                    {booking.status === "completed" && (
+                      <div className="mt-3">
+                        {typeof booking.rating === "number" ? (
+                          <p className="text-sm text-gray-700">
+                            Your rating: {"★".repeat(booking.rating)}
+                            {"☆".repeat(5 - booking.rating)}
+                            {booking.review ? ` — "${booking.review}"` : ""}
+                          </p>
+                        ) : (
+                          <div className="bg-gray-50 border border-gray-200 rounded p-3">
+                            <form
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                const form = e.currentTarget as HTMLFormElement;
+                                const formData = new FormData(form);
+                                const rating = Number(formData.get("rating"));
+                                const review = String(
+                                  formData.get("review") || ""
+                                );
+                                handleSubmitRating(booking.id, rating, review);
+                              }}
+                            >
+                              <div className="flex items-center space-x-2 mb-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <button
+                                    key={star}
+                                    type="button"
+                                    onClick={() =>
+                                      setRatingState((s) => ({
+                                        ...s,
+                                        [booking.id]: {
+                                          rating: star,
+                                          review: s[booking.id]?.review || "",
+                                          submitting: false,
+                                        },
+                                      }))
+                                    }
+                                    className={`text-xl ${
+                                      (ratingState[booking.id]?.rating || 0) >=
+                                      star
+                                        ? "text-yellow-500"
+                                        : "text-gray-300"
+                                    }`}
+                                    aria-label={`${star} star`}
+                                  >
+                                    ★
+                                  </button>
+                                ))}
+                                <input
+                                  type="hidden"
+                                  name="rating"
+                                  value={ratingState[booking.id]?.rating || 5}
+                                />
+                              </div>
+                              <textarea
+                                name="review"
+                                rows={2}
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Share your experience (optional)"
+                                defaultValue={
+                                  ratingState[booking.id]?.review || ""
+                                }
+                              />
+                              {ratingState[booking.id]?.error && (
+                                <p className="text-sm text-red-600 mt-1">
+                                  {ratingState[booking.id]?.error}
+                                </p>
+                              )}
+                              <div className="mt-2">
+                                <Button
+                                  type="submit"
+                                  size="sm"
+                                  disabled={
+                                    !!ratingState[booking.id]?.submitting
+                                  }
+                                >
+                                  {ratingState[booking.id]?.submitting
+                                    ? "Submitting..."
+                                    : "Submit Rating"}
+                                </Button>
+                              </div>
+                            </form>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

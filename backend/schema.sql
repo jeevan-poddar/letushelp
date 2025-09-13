@@ -73,6 +73,9 @@ CREATE TABLE IF NOT EXISTS bookings (
     final_price DECIMAL(10,2),
     status VARCHAR(50) DEFAULT 'confirmed' CHECK (status IN ('confirmed', 'in_progress', 'completed', 'cancelled')),
     notes TEXT,
+    rating INTEGER CHECK (rating BETWEEN 1 AND 5),
+    review TEXT,
+    rated_at TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(request_id)
@@ -141,3 +144,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_bookings_reference_id ON bookings(referenc
 UPDATE bookings 
 SET reference_id = COALESCE(reference_id, 'BKG-' || lpad(id::text, 8, '0'))
 WHERE reference_id IS NULL;
+
+-- Add rating columns if not exist
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS rating INTEGER CHECK (rating BETWEEN 1 AND 5);
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS review TEXT;
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS rated_at TIMESTAMP;
